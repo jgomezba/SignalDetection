@@ -10,3 +10,8 @@ This project leverages Machine Learning techniques to geolocate signals from unk
 
 2. Execute script `models.py` and change parameters to see adjustment ![image](https://github.com/user-attachments/assets/ddf191e3-ec08-401f-bdd1-21c7126b4ac5) ![image](https://github.com/user-attachments/assets/cb5a8e98-9180-4d68-8fec-80a547ada5ac)
 
+## Notes
+
+Data used in models is available in folder `Sample_Data\For_Modeling`:
+1. datosMarcacionesES_1733999425626_1 --> Contains some measure errors (real case)
+2. datosMarcacionesES_1733999425626 --> Does not contains measure errors
