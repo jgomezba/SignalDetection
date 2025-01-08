@@ -5,6 +5,7 @@ import sys
 from itertools import combinations, product
 
 import pandas as pd
+import numpy as np
 import matplotlib.pyplot as plt
 from sklearn.cluster import DBSCAN, OPTICS
 from sklearn.preprocessing import StandardScaler
@@ -171,6 +172,37 @@ def get_min_distances_df(df_emmiters, centroids_df):
 
     return min_distance_rows
 
+def tune_dbscan(df, df_emmiters, param_grid):
+    best_params = None
+    best_error = float('inf')
+
+    for eps in param_grid['eps']:
+        for min_samples in param_grid['min_samples']:
+            centroids = execute_DBSCAN_model(df, eps, min_samples, False)
+            distances_df = get_min_distances_df(df_emmiters, centroids)
+            error = distances_df["distance"].mean()
+
+            if error < best_error:
+                best_error = error
+                best_params = {'eps': eps, 'min_samples': min_samples}
+
+    return best_params, best_error
+
+def tune_optics(df, df_emmiters, param_grid):
+    best_params = None
+    best_error = float('inf')
+
+    for min_samples in param_grid['min_samples']:
+        centroids = execute_OPTICS_model(df, min_samples, False)
+        distances_df = get_min_distances_df(df_emmiters, centroids)
+        error = distances_df["distance"].mean()
+
+        if error < best_error:
+            best_error = error
+            best_params = {'min_samples': min_samples}
+
+    return best_params, best_error
+
 if __name__ == "__main__":
     #Read config parameters
     config = read_initial_data('Code/Modeling/config.json')
@@ -179,6 +211,15 @@ if __name__ == "__main__":
     axis_x = tuple(config["axis_x"]) 
     axis_y = tuple(config["axis_y"])  
     plot_intersections = config["plot_intersections"]
+    
+    # Define parameter ranges
+    dbscan_param_grid = {
+        'eps': np.arange(0.05, 1.0, 0.05),
+        'min_samples': range(5, 101, 5)
+    }
+    optics_param_grid = {
+        'min_samples': range(5, 101, 5),
+    }
     
     #Read data
     df = get_csv_simulation(csv_location)
@@ -189,20 +230,9 @@ if __name__ == "__main__":
     #Calculate intersection points
     df_intersections, df_intersections_filtered = calculate_intersection_points(df_model, number_of_receptors, plot_intersections)
     
-    #Apply DBSCAN
-    centroids_model_1 = execute_DBSCAN_model(df_intersections_filtered, 0.1, 100)
+    best_dbscan_params, dbscan_error = tune_dbscan(df_intersections_filtered, df_emmiters, dbscan_param_grid)
+    print(f"Best DBSCAN Params: {best_dbscan_params}, Error: {dbscan_error}")
     
-    #Apply OPTICS
-    centroids_model_2 = execute_OPTICS_model(df_intersections_filtered, 100)
-    
-    #Get minimum distances
-    DBSCAN_distances_df = get_min_distances_df(df_emmiters, centroids_model_1)
-    OPTICS_distances_df = get_min_distances_df(df_emmiters, centroids_model_2)
-    
-    print(f"DBSCAN: error {DBSCAN_distances_df["distance"].mean()} km")
-    print(DBSCAN_distances_df)
-    print()
-    print(f"OPTICS: error {OPTICS_distances_df["distance"].mean()} km")
-    print(OPTICS_distances_df)
-    
+    best_optics_params, optics_error = tune_optics(df_intersections_filtered, df_emmiters, optics_param_grid)
+    print(f"Best OPTICS Params: {best_optics_params}, Error: {optics_error}")
    
