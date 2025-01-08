@@ -8,7 +8,8 @@ This project leverages Machine Learning techniques to geolocate signals from unk
 
 1. Install requirements txt using command `python -m pip install -r requirements.txt` ![image](https://github.com/user-attachments/assets/a7293152-c062-4eca-bd75-54951838866b)
 
-2. Execute script `models.py` and change parameters to see adjustment ![image](https://github.com/user-attachments/assets/ddf191e3-ec08-401f-bdd1-21c7126b4ac5) ![image](https://github.com/user-attachments/assets/cb5a8e98-9180-4d68-8fec-80a547ada5ac)
+2. Execute script `models.py` and change parameters to see adjustment ![image](https://github.com/user-attachments/assets/ddf191e3-ec08-401f-bdd1-21c7126b4ac5) ![image](https://github.com/user-attachments/assets/cab7db04-5c36-46d0-ab36-e6a213db53b2)
+
 
 ## Notes
 
