@@ -1,0 +1,7 @@
+{
+    "csv_location": "Sample_Data/For_Modeling/datosMarcacionesES_1733999425626_1.csv",
+    "number_of_receptors": 3,
+    "axis_x": [0, 1],
+    "axis_y": [40.83, 41.47],
+    "plot_intersections": false
+  }
