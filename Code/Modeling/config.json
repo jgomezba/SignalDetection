@@ -3,5 +3,5 @@
     "number_of_receptors": 3,
     "axis_x": [0, 1],
     "axis_y": [40.83, 41.47],
-    "plot_intersections": false
+    "plot_intersections": true
   }
