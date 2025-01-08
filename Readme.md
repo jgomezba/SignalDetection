@@ -15,3 +15,5 @@ This project leverages Machine Learning techniques to geolocate signals from unk
 Data used in models is available in folder `Sample_Data\For_Modeling`:
 1. datosMarcacionesES_1733999425626_1 --> Contains some measure errors (real case)
 2. datosMarcacionesES_1733999425626 --> Does not contains measure errors
+
+Post can help to understand code `https://medium.com/@gomezbarrosojavier/emitter-signal-geolocation-with-machine-learning-59b377ee2145`
